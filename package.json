@@ -27,7 +27,8 @@
     "sharp": "^0.34.5",
     "tailwind-merge": "^3.4.0",
     "thirdweb": "^5.112.4",
-    "tinacms": "^2.9.5"
+    "tinacms": "^2.9.5",
+    "why-is-node-running": "^3.2.2"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^6.1.0",
