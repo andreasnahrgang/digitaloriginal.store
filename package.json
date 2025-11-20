@@ -26,6 +26,7 @@
     "react-dom": "19.2.0",
     "sharp": "^0.34.5",
     "tailwind-merge": "^3.4.0",
+    "tap": "^21.1.5",
     "tape": "^5.9.0",
     "thirdweb": "^5.112.4",
     "tinacms": "^2.9.5",
