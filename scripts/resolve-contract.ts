@@ -27,7 +27,7 @@ async function main() {
         console.log("Success! Metadata:", metadata);
         console.log("Address:", contract.address);
     } catch (e) {
-        console.error("Failed with slug as address:", e.message);
+        console.error("Failed with slug as address:", e instanceof Error ? e.message : String(e));
     }
 }
 

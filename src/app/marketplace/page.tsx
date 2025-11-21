@@ -1,6 +1,12 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+
+const Navbar = dynamic(
+  () => import("@/components/navbar").then(mod => ({ default: mod.Navbar })),
+  { ssr: false, loading: () => <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-black/80 backdrop-blur-md border-b border-border" /> }
+);
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -54,7 +60,9 @@ const allNFTs = [
 export default function MarketplacePage() {
     return (
         <main className="min-h-screen bg-background text-foreground">
-            <Navbar />
+            <Suspense fallback={<nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-black/80 backdrop-blur-md border-b border-border" />}>
+        <Navbar />
+      </Suspense>
 
             <div className="container mx-auto px-4 pt-24 pb-12">
                 <header className="mb-12 text-center">

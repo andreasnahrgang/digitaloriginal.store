@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -11,7 +13,11 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
-import { Navbar } from "@/components/navbar";
+
+const Navbar = dynamic(
+  () => import("@/components/navbar").then(mod => ({ default: mod.Navbar })),
+  { ssr: false, loading: () => <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-black/80 backdrop-blur-md border-b border-border" /> }
+);
 
 // Mock data for the carousel - eventually this will come from the marketplace
 const featuredNFTs = [
@@ -42,7 +48,9 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <Navbar />
+      <Suspense fallback={<nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-black/80 backdrop-blur-md border-b border-border" />}>
+        <Navbar />
+      </Suspense>
 
       <section className="h-screen flex items-center justify-center p-4 pt-20">
         <Carousel
