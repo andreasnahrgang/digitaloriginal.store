@@ -1,12 +1,16 @@
 import { createThirdwebClient } from "thirdweb";
 import { upload } from "thirdweb/storage";
 
-const client = createThirdwebClient({
-    clientId: process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID || "",
-});
+const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
+
+const client = clientId ? createThirdwebClient({ clientId }) : null;
 
 export async function uploadToIPFS(file: File) {
     try {
+        if (!client) {
+            throw new Error("Thirdweb client not initialized");
+        }
+
         const uri = await upload({
             client,
             files: [file],
