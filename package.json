@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"next dev\"",
+    "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint"
@@ -33,13 +33,11 @@
     "tap": "^21.1.5",
     "tape": "^5.9.0",
     "thirdweb": "^5.112.4",
-    "tinacms": "^2.9.5",
     "why-is-node-running": "^3.2.2"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^6.1.0",
     "@tailwindcss/postcss": "^4",
-    "@tinacms/cli": "^1.12.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
