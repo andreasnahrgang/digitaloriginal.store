@@ -4,6 +4,8 @@ import "./globals.css";
 
 import { ThirdwebProviderWrapper } from "@/components/thirdweb-provider";
 
+export const runtime = "nodejs";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
