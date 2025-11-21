@@ -13,12 +13,11 @@ export function Navbar() {
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-black/80 backdrop-blur-md border-b border-border">
             <div className="flex items-center gap-2">
-                {/* Logo Placeholder - replace with Image if needed, using text for now as per minimalist design or use the logo image if available */}
                 <Link href="/" className="flex items-center gap-2" prefetch={false}>
-                    <div className="relative h-8 w-40">
+                    <div className="relative h-12 w-48">
                         <Image
                             src="/logo.png"
-                            alt="digitaloriginal"
+                            alt="Digital Original"
                             fill
                             className="object-contain"
                             priority
