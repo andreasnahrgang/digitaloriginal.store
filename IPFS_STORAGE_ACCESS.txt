@@ -1,0 +1,30 @@
+
+thirdweb IPFS Storage Access Instructions
+==========================================
+
+Your Credentials (verified):
+- Client ID: 8126b799ae4b5fb67c286a269055c02b
+- Secret Key: T1fpPZJoD6KtCtS...
+
+Direct Dashboard Access:
+https://thirdweb.com/team/1677596d0fcd31580e84a892d404d3fce00a8269/~/usage/storage
+
+This dashboard shows:
+✓ Count of all IPFS uploads
+✓ File names and descriptions
+✓ IPFS hashes (content addressing)
+✓ File sizes
+✓ Upload timestamps
+✓ File types/MIME types
+✓ Download functionality
+
+To export the complete inventory:
+1. Go to the storage page (link above)
+2. Look for "Export", "Download", or similar button
+3. Save as JSON or CSV format
+4. Use for analytics, documentation, or integration
+
+API Limitations:
+The public thirdweb API endpoints don't expose file listing for storage.
+Direct dashboard access is the most reliable method to view all files.
+    
