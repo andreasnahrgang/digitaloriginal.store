@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import { allNFTs, getRarityColor, validateNFTMetadata } from "@/data/nft-metadata";
 
 const Navbar = dynamic(
   () => import("@/components/navbar").then(mod => ({ default: mod.Navbar })),
@@ -11,51 +12,8 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-// Mock data - replace with ThirdWeb SDK fetch
-const allNFTs = [
-    {
-        id: 1,
-        title: "Abstract Digital #1",
-        artist: "Artist One",
-        price: "0.5 ETH",
-        image: "https://ipfs.io/ipfs/QmUvMLF1mcjRujX7rGSQ9tY7pdBFSpicgpt85YVNiqPcW2",
-    },
-    {
-        id: 2,
-        title: "Neon Genesis",
-        artist: "Artist Two",
-        price: "0.8 ETH",
-        image: "https://ipfs.io/ipfs/QmR7Spu6GLZHs2VHrjP2qNZiWrGoFSWzEZMUPDa6ejRyWg",
-    },
-    {
-        id: 3,
-        title: "Cyber Punk 2077",
-        artist: "Artist Three",
-        price: "1.2 ETH",
-        image: "https://ipfs.io/ipfs/QmVTujrCe6vnShvUVfvBqcr8XAf9YmaZLAHof7thjjnHjQ",
-    },
-    {
-        id: 4,
-        title: "Digital Wave",
-        artist: "Artist Four",
-        price: "0.3 ETH",
-        image: "https://ipfs.io/ipfs/QmdAnD7SoEMWGpV9NHpxNvB4cq2YuTo7eA4YAJQpHg2R8T",
-    },
-    {
-        id: 5,
-        title: "Future City",
-        artist: "Artist Five",
-        price: "2.0 ETH",
-        image: "https://ipfs.io/ipfs/QmSz8zi3AHGXDTm35w4e9xybWJfRMkXk8Yd8MGtbn3HeZ4",
-    },
-    {
-        id: 6,
-        title: "Glitch Art",
-        artist: "Artist Six",
-        price: "0.1 ETH",
-        image: "https://ipfs.io/ipfs/QmUTnPcmcRvBMQLg516wCUUxA2XZyrWPXZ6DHJahGV5qS5",
-    },
-];
+// Validate all NFT metadata on load
+const validatedNFTs = allNFTs.filter(nft => validateNFTMetadata(nft));
 
 export default function MarketplacePage() {
     return (
@@ -73,31 +31,64 @@ export default function MarketplacePage() {
                 </header>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {allNFTs.map((nft) => (
-                        <Link href={`/nft/${nft.id}`} key={nft.id}>
-                            <Card className="bg-black border border-border hover:border-primary transition-colors duration-300 overflow-hidden group h-full flex flex-col">
-                                <CardHeader className="p-0">
-                                    <div className="aspect-square overflow-hidden relative">
-                                        <img
-                                            src={nft.image}
-                                            alt={nft.title}
-                                            className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
-                                        />
-                                    </div>
-                                </CardHeader>
-                                <CardContent className="p-6 flex-grow">
-                                    <CardTitle className="text-xl font-bold text-white mb-2">{nft.title}</CardTitle>
-                                    <p className="text-sm text-muted-foreground">by <span className="text-primary">{nft.artist}</span></p>
-                                </CardContent>
-                                <CardFooter className="p-6 pt-0 flex justify-between items-center">
-                                    <span className="text-lg font-bold text-white">{nft.price}</span>
-                                    <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-black">
-                                        View Details
-                                    </Button>
-                                </CardFooter>
-                            </Card>
-                        </Link>
-                    ))}
+                    {validatedNFTs.length > 0 ? (
+                        validatedNFTs.map((nft) => (
+                            <Link href={`/nft/${nft.id}`} key={nft.id}>
+                                <Card className="bg-black border border-border hover:border-primary transition-colors duration-300 overflow-hidden group h-full flex flex-col">
+                                    <CardHeader className="p-0">
+                                        <div className="aspect-square overflow-hidden relative bg-neutral-900">
+                                            <img
+                                                src={nft.image}
+                                                alt={nft.title}
+                                                className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+                                                onError={(e) => {
+                                                    e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect fill="%23222" width="400" height="400"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23666" font-size="16" font-family="Verdana"%3EImage unavailable%3C/text%3E%3C/svg%3E';
+                                                }}
+                                                loading="lazy"
+                                            />
+                                        </div>
+                                    </CardHeader>
+                                    <CardContent className="p-6 flex-grow">
+                                        <CardTitle className="text-xl font-bold text-white mb-1" style={{ fontFamily: '"Verdana", system-ui, -apple-system, sans-serif' }}>
+                                            {nft.title}
+                                        </CardTitle>
+                                        <p className="text-sm text-muted-foreground mb-3">by <span className="text-primary" style={{ fontFamily: '"Verdana", system-ui, -apple-system, sans-serif' }}>{nft.artist}</span></p>
+                                        <p className="text-xs text-neutral-400 line-clamp-2" style={{ fontFamily: '"Verdana", system-ui, -apple-system, sans-serif' }}>
+                                            {nft.description}
+                                        </p>
+                                        {nft.category && (
+                                            <span className="inline-block mt-2 px-2 py-1 text-xs bg-neutral-800 text-neutral-300 rounded">
+                                                {nft.category}
+                                            </span>
+                                        )}
+                                    </CardContent>
+                                    <CardFooter className="p-6 pt-0 flex justify-between items-center">
+                                        <div className="flex flex-col gap-1">
+                                            <span className="text-lg font-bold text-white" style={{ fontFamily: '"Verdana", system-ui, -apple-system, sans-serif' }}>
+                                                {nft.price}
+                                            </span>
+                                            {nft.rarity && (
+                                                <span className={`text-xs font-semibold ${getRarityColor(nft.rarity)}`}>
+                                                    {nft.rarity.toUpperCase()}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <Button 
+                                            variant="outline" 
+                                            className="border-primary text-primary hover:bg-primary hover:text-black" 
+                                            style={{ fontFamily: '"Verdana", system-ui, -apple-system, sans-serif' }}
+                                        >
+                                            View Details
+                                        </Button>
+                                    </CardFooter>
+                                </Card>
+                            </Link>
+                        ))
+                    ) : (
+                        <div className="col-span-full text-center py-12">
+                            <p className="text-muted-foreground">No NFTs available. Please check back soon.</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </main>

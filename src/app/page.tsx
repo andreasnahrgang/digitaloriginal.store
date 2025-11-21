@@ -42,6 +42,7 @@ const featuredNFTs = [
 ];
 
 export default function Home() {
+  // Force rebuild: v1.0.1 - Restoring full Carousel UI
   const plugin = React.useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true })
   );
