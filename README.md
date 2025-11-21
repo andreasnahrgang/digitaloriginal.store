@@ -33,4 +33,24 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
+
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Deployment Configuration
+
+### Environment Variables
+
+For the application to function correctly on Vercel, you must configure the following environment variables in your project settings:
+
+- `NEXT_PUBLIC_TINA_CLIENT_ID`: Your TinaCMS Client ID.
+- `TINA_TOKEN`: Your TinaCMS Read/Write Token.
+- `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase Project URL.
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase Anonymous Key.
+- `NEXT_PUBLIC_THIRDWEB_CLIENT_ID`: Your Thirdweb Client ID.
+
+### Build Settings
+
+The build command has been updated to:
+`tinacms build && next build`
+
+This ensures that the TinaCMS admin dashboard is generated correctly during deployment.
