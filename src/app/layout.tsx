@@ -1,38 +1,16 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-
-import { ThirdwebProviderWrapper } from "@/components/thirdweb-provider";
-
-export const runtime = "nodejs";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "Digital Original - NFT Art Marketplace",
-  description: "A minimalist avant-garde NFT marketplace.",
-};
+export const metadata = {
+  title: 'Deployment Test',
+  description: 'Testing Vercel deployment',
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
-      >
-        <ThirdwebProviderWrapper>{children}</ThirdwebProviderWrapper>
-      </body>
+      <body>{children}</body>
     </html>
-  );
+  )
 }
